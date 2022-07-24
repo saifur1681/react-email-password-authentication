@@ -94,7 +94,7 @@ displayName: name
       .then((result) => {
         console.log(result)
       })
-  }
+  };
 
   return (
     <div className="m-5" >
