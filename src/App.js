@@ -60,7 +60,7 @@ function App() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(result => {
-        console.log(result.user)
+        console.log(result.user);
         setError('');
       })
       .catch(error => {
