@@ -78,7 +78,7 @@ function App() {
       .catch(error => {
         setError(error.message);
       })
-  }
+  };
 
   const setUserName = () => {
     updateProfile(auth.currentUser, {
@@ -87,7 +87,7 @@ displayName: name
     .then(()=>{
 
     })
-  }
+  };
 
   const verifyEmail = () => {
     sendEmailVerification(auth.currentUser)
