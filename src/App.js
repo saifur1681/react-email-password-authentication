@@ -77,7 +77,7 @@ function App() {
         setError('');
       })
       .catch(error => {
-        setError(error.message)
+        setError(error.message);
       })
   }
 
@@ -86,7 +86,7 @@ function App() {
 displayName: name
     })
     .then(()=>{
-      
+
     })
   }
 
