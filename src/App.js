@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "firebase/auth";
 import firebaseConfigarationInitiliZing from './Firebase/firebase-initialize';
 
 
@@ -9,10 +9,15 @@ firebaseConfigarationInitiliZing();
 const auth = getAuth();
 
 function App() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLogin, setIsLogin] = useState(false)
+
+  const handleNameChange = e => {
+    setName(e.target.value)
+  }
 
   const toggleLogin = e => {
     setIsLogin(e.target.checked)
@@ -24,6 +29,13 @@ function App() {
 
   const handleEmailChange = e => {
     setEmail(e.target.value);
+  }
+
+  const ResetPassword = () => {
+    sendPasswordResetEmail(auth, email)
+      .then(result => {
+        console.log(result)
+      })
   }
 
   const handleRegistration = e => {
@@ -49,6 +61,7 @@ function App() {
         console.log(user);
         setError('');
         verifyEmail();
+        setUserName();
       })
       .catch(error => {
         setError(error.message);
@@ -68,6 +81,15 @@ function App() {
       })
   }
 
+  const setUserName = () => {
+    updateProfile(auth.currentUser, {
+displayName: name
+    })
+    .then(()=>{
+      
+    })
+  }
+
   const verifyEmail = () => {
     sendEmailVerification(auth.currentUser)
       .then((result) => {
@@ -78,8 +100,14 @@ function App() {
   return (
     <div className="m-5" >
       <form onSubmit={handleRegistration} >
+        <h2 className="text-regular" >Please {isLogin ? 'Login' : 'Register'}</h2>
+        {!isLogin && <div class="row mb-3">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input onBlur={handleNameChange} type="name" class="form-control" id="inputEmail3" required />
+          </div>
+        </div>}
         <div class="row mb-3">
-          <h2 className="text-regular" >Please {isLogin ? 'Login' : 'Register'}</h2>
           <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10">
             <input onBlur={handleEmailChange} type="email" class="form-control" id="inputEmail3" required />
@@ -103,6 +131,8 @@ function App() {
         </div>
         <div className="text-danger" ><h3>{error}</h3></div>
         <button type="submit" class="btn btn-primary">{isLogin ? 'Log In' : 'Register'}</button>
+        <button onClick={ResetPassword} type="button" className="btn btn-success m-1">Reset Password</button>
+
       </form>
     </div>
   )
