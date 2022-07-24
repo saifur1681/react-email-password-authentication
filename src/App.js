@@ -61,7 +61,7 @@ function App() {
     signInWithEmailAndPassword(auth, email, password)
       .then(result => {
         console.log(result.user)
-        setError('')
+        setError('');
       })
       .catch(error => {
         setError(error.message)
