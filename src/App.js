@@ -53,7 +53,7 @@ function App() {
       .catch(error => {
         setError(error.message);
       })
-    console.log(email, password)
+    console.log(email, password);
   }
 
   const processLogin = (email, password) => {
