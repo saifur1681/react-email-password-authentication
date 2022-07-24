@@ -70,7 +70,6 @@ function App() {
   }
 
   const processLogin = (email, password) => {
-
     signInWithEmailAndPassword(auth, email, password)
       .then(result => {
         console.log(result.user);
